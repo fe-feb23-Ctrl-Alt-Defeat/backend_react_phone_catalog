@@ -1,0 +1,22 @@
+{
+  "name": "backend_react_phone_catalog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fe-feb23-Ctrl-Alt-Defeat/backend_react_phone_catalog.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fe-feb23-Ctrl-Alt-Defeat/backend_react_phone_catalog/issues"
+  },
+  "homepage": "https://github.com/fe-feb23-Ctrl-Alt-Defeat/backend_react_phone_catalog#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
