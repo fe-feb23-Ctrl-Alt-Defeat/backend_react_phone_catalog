@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/server.ts",
     "build": "tsc -p .",
-    "lint:js": "eslint src/**/*.ts",
+    "lint:ts": "eslint src/**/*.ts",
     "lint": "npm run lint:ts"
   },
   "repository": {
