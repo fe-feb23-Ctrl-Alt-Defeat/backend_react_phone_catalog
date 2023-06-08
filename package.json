@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/server.ts",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "lint:js": "eslint src/**/*.ts",
+    "lint": "npm run lint:ts"
   },
   "repository": {
     "type": "git",
@@ -21,7 +23,8 @@
   "homepage": "https://github.com/fe-feb23-Ctrl-Alt-Defeat/backend_react_phone_catalog#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "sequelize": "^6.32.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
