@@ -1,10 +1,10 @@
-import expres from 'express';
+import express from 'express';
 import cors from 'cors';
 
-const app = expres();
+const app = express();
 
 app.use(cors());
-app.use(expres.json());
+app.use(express.json());
 app.get('/', (_, res) => {
   res.send('Hello World!');
 });
