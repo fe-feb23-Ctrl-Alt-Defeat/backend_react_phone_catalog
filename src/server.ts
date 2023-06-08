@@ -1,7 +1,10 @@
 import expres from 'express';
+import cors from 'cors';
 
 const app = expres();
 
+app.use(cors());
+app.use(expres.json());
 app.get('/', (_, res) => {
   res.send('Hello World!');
 });
