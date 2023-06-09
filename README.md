@@ -1,0 +1,1 @@
+sync.ts and dbInitInfo.json are not used in server, they are for sending initial data and creating a table

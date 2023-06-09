@@ -23,8 +23,14 @@
   "homepage": "https://github.com/fe-feb23-Ctrl-Alt-Defeat/backend_react_phone_catalog#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.1.4",
     "express": "^4.18.2",
-    "sequelize": "^6.32.0"
+    "pg": "^8.11.0",
+    "pg-hstore": "^2.3.4",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^7.8.1",
+    "sequelize": "^6.32.0",
+    "sequelize-typescript": "^2.1.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
