@@ -13,10 +13,9 @@ export enum Colors {
   rosegold = "rosegold",
 }
 
-export interface Phone {
+export interface Product {
   id: string,
   category: string,
-  phoneId: string,
   itemId: string,
   name: string,
   fullPrice: number,
