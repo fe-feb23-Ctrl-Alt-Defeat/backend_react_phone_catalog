@@ -7,7 +7,7 @@ export const getAllPhones = (req: Request, res: Response) => {
     return null;
   }
 
-  const phones = phonesService.filteredPhones(<Phone><unknown>req.body);
+  const phones = phonesService.getFilteredPhones(<Phone><unknown>req.body);
 
   res.send(phones);
 };

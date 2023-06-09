@@ -49,7 +49,7 @@ let phones: Phone[] = [
   },
 ];
 
-export const filteredPhones = ({
+export const getFilteredPhones = ({
   phoneId,
   itemId,
   name,
