@@ -36,6 +36,13 @@ exports.getOneById = exports.getAllProducts = void 0;
 const productService = __importStar(require("../services/products"));
 const getAllProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const products = yield productService.getAll();
+    const { page, limit } = req.query;
+    if (page && limit) {
+        const startValue = (Number(page) - 1) * Number(limit);
+        const slicedProducts = products.slice(startValue, startValue + Number(limit));
+        res.send(slicedProducts);
+        return;
+    }
     res.send(products);
 });
 exports.getAllProducts = getAllProducts;
