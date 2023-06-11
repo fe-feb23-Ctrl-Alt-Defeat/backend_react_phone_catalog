@@ -61,8 +61,17 @@ import { Product } from "../models/Product";
 
 export const getAll = () => {
   return Product.findAll();
-}
+};
 
 export const getById = (id: number) => {
   return Product.findByPk(id);
+};
+
+export const getByPage = (page: number, limit: number) => {
+  const offset = (page - 1) * limit;
+  
+  return Product.findAndCountAll({
+    offset,
+    limit, 
+  })
 };

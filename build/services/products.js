@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getById = exports.getAll = void 0;
+exports.getByPage = exports.getById = exports.getAll = void 0;
 const Product_1 = require("../models/Product");
 // export const getFilteredProducts = ({
 //   itemId,
@@ -58,3 +58,11 @@ const getById = (id) => {
     return Product_1.Product.findByPk(id);
 };
 exports.getById = getById;
+const getByPage = (page, limit) => {
+    const offset = (page - 1) * limit;
+    return Product_1.Product.findAndCountAll({
+        offset,
+        limit,
+    });
+};
+exports.getByPage = getByPage;
