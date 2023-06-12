@@ -2,18 +2,28 @@ import { Request, Response } from "express";
 import * as productService from "../services/products";
 
 export const getAllProducts = async(req: Request, res: Response) => {
-  const { page, limit } = req.query;
-
-  if ((page && !limit) || (!page && limit)) {
+  const { page, limit, orderBy, orderDir } = req.query;
+  const isRequestBad = ((page && !limit) || (!page && limit))
+    || ((orderDir !== 'ASC' && orderDir !== 'DESC') && orderDir !== undefined);
+  
+  if (isRequestBad) {
     res.sendStatus(400);
+
     return;
   }
 
   if (page && limit) {
-    const slicedProducts = await productService.getByPage(
+    const sortedBy = orderBy?.toString() || undefined;
+
+    const slicedProducts = await productService.getByPageAndOrder(
       Number(page), 
       Number(limit),
-    );
+      sortedBy,
+    )
+
+    if (orderDir === 'DESC') {
+      slicedProducts.rows.reverse();
+    }
 
     res.send(slicedProducts);
 
