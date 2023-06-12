@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { productsRouter } from "./routes/products";
+import { phonesRouter } from "./routes/phones";
 import { dbInit } from "./utils/dbInit";
 import path from 'path';
 
@@ -13,6 +14,7 @@ dbInit();
 app.use(cors());
 app.use(express.json());
 app.use("/products", productsRouter);
+app.use("/phones", phonesRouter);
 app.use(express.static(path.resolve('public')));
 
 app.listen(PORT, () => {

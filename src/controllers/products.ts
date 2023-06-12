@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import * as productService from "../services/products";
 
 export const getAllProducts = async(req: Request, res: Response) => {
-  
   const { page, limit } = req.query;
 
   if ((page && !limit) || (!page && limit)) {
@@ -29,12 +28,12 @@ export const getAllProducts = async(req: Request, res: Response) => {
 
 export const getOneById = async(req: Request, res: Response) => {
   const { id } = req.params;
-  const foundPhone = await productService.getById(+id);
+  const foundProduct = await productService.getById(+id);
 
-  if (!foundPhone) {
+  if (!foundProduct) {
     res.sendStatus(404);
     return;
   }
 
-  res.send(foundPhone);
+  res.send(foundProduct);
 };

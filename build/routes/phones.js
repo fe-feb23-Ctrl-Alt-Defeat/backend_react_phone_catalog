@@ -26,9 +26,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.productsRouter = void 0;
+exports.phonesRouter = void 0;
 const express_1 = __importDefault(require("express"));
-const productsController = __importStar(require("../controllers/products"));
-exports.productsRouter = express_1.default.Router();
-exports.productsRouter.get("/", productsController.getAllProducts);
-exports.productsRouter.get("/:id", productsController.getOneById);
+const phonesController = __importStar(require("../controllers/phones"));
+exports.phonesRouter = express_1.default.Router();
+exports.phonesRouter.get("/:itemId", phonesController.getOneById);
