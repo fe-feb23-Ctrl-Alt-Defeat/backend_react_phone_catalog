@@ -32,30 +32,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getOneById = exports.getAllProducts = void 0;
-const productService = __importStar(require("../services/products"));
-const getAllProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { page, limit } = req.query;
-    if ((page && !limit) || (!page && limit)) {
-        res.sendStatus(400);
-        return;
-    }
-    if (page && limit) {
-        const slicedProducts = yield productService.getByPage(Number(page), Number(limit));
-        res.send(slicedProducts);
-        return;
-    }
-    const products = yield productService.getAll();
-    res.send(products);
-});
-exports.getAllProducts = getAllProducts;
+exports.getOneById = void 0;
+const phonesService = __importStar(require("../services/phones"));
 const getOneById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    const foundProduct = yield productService.getById(+id);
-    if (!foundProduct) {
+    const { itemId } = req.params;
+    const foundPhone = yield phonesService.getById(itemId);
+    if (!foundPhone) {
         res.sendStatus(404);
         return;
     }
-    res.send(foundProduct);
+    res.send(foundPhone);
 });
 exports.getOneById = getOneById;
