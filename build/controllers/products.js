@@ -32,9 +32,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getOneById = exports.getAllProducts = void 0;
+exports.getOneById = exports.getProducts = void 0;
 const productService = __importStar(require("../services/products"));
-const getAllProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.body) {
+        const { ids } = req.body;
+        console.log(req.body);
+        const products = yield productService.getByIds(ids);
+        res.send(products);
+        return;
+    }
     const { page, limit, orderBy, orderDir = 'ASC' } = req.query;
     const isRequestBad = ((page && !limit) || (!page && limit))
         || ((orderDir !== 'ASC' && orderDir !== 'DESC'));
@@ -51,7 +58,7 @@ const getAllProducts = (req, res) => __awaiter(void 0, void 0, void 0, function*
     const products = yield productService.getAll(sortedBy, orderDir);
     res.send(products);
 });
-exports.getAllProducts = getAllProducts;
+exports.getProducts = getProducts;
 const getOneById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const foundProduct = yield productService.getById(+id);
