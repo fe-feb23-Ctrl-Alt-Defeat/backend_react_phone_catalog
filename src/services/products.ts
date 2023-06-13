@@ -15,6 +15,14 @@ export const getAll = (orderBy: string = 'id', orderDir: OrderDirection) => {
   });
 };
 
+export const getByIds = (ids: number[]) => {
+  return Product.findAll({
+    where: {
+      id: ids,
+    }
+  })
+}
+
 export const getById = (id: number) => {
   return Product.findByPk(id);
 };
