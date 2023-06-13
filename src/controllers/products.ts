@@ -3,10 +3,14 @@ import * as productService from "../services/products";
 export const getProducts = async(req: Request, res: Response) => {
   const { page, limit, orderBy, orderDir = 'ASC', ids } = req.query;
   if (ids) {
+    if (ids.toString().length === 0) {
+      res.send([]);
+
+      return;
+    }
+
     const idsArray = ids.toString().split(',').map(id => Number(id));
     const products = await productService.getByIds(idsArray);
-
-    console.log(ids);
 
     res.send(products);
 

@@ -37,9 +37,12 @@ const productService = __importStar(require("../services/products"));
 const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { page, limit, orderBy, orderDir = 'ASC', ids } = req.query;
     if (ids) {
+        if (ids.toString().length === 0) {
+            res.send([]);
+            return;
+        }
         const idsArray = ids.toString().split(',').map(id => Number(id));
         const products = yield productService.getByIds(idsArray);
-        console.log(ids);
         res.send(products);
         return;
     }

@@ -26,9 +26,4 @@ or
 
 /products?orderBy=year&orderDir=DESC
 
-6. To get products by their ids (for exapmle to get your cart or favorites) you should use /products and in body of request send object with ids property, which should be array of ids to get, for expample:
-{
-    "ids": [1,5,10]
-}
-
-You should not use any query params
+6. To get products by their ids (for exapmle to get your cart or favorites) you should use /products?ids=1,2,3
