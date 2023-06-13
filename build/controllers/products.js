@@ -35,17 +35,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getOneById = exports.getAllProducts = void 0;
 const productService = __importStar(require("../services/products"));
 const getAllProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { page, limit } = req.query;
-    if ((page && !limit) || (!page && limit)) {
+    const { page, limit, orderBy, orderDir = 'ASC' } = req.query;
+    const isRequestBad = ((page && !limit) || (!page && limit))
+        || ((orderDir !== 'ASC' && orderDir !== 'DESC'));
+    const sortedBy = orderBy === null || orderBy === void 0 ? void 0 : orderBy.toString();
+    if (isRequestBad) {
         res.sendStatus(400);
         return;
     }
     if (page && limit) {
-        const slicedProducts = yield productService.getByPage(Number(page), Number(limit));
+        const slicedProducts = yield productService.getByPageAndOrder(Number(page), Number(limit), sortedBy, orderDir);
         res.send(slicedProducts);
         return;
     }
-    const products = yield productService.getAll();
+    const products = yield productService.getAll(sortedBy, orderDir);
     res.send(products);
 });
 exports.getAllProducts = getAllProducts;

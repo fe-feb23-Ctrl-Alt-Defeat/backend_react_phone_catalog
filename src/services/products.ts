@@ -1,77 +1,41 @@
+import { Order } from "sequelize";
 import { Product } from "../models/Product";
 
-// export const getFilteredProducts = ({
-//   itemId,
-//   name,
-//   fullPrice,
-//   price,
-//   capacity,
-//   color,
-//   ram,
-//   year,
-// }: Product) => {
-//   let filteredPhones = phones;
+type RequestProps = {
+  offset: number;
+  limit: number;
+  order?: Order;
+}
 
-//   switch (true) {
+type OrderDirection = 'ASC' | 'DESC';
 
-//     case !!itemId:
-//       return (filteredPhones = filteredPhones.filter(
-//         (phone) => phone.itemId === itemId
-//       ));
-
-//     case !!name:
-//       return (filteredPhones = filteredPhones.filter((phone) =>
-//         phone.name.toLowerCase().includes(name.toLowerCase())
-//       ));
-
-//     case !!fullPrice:
-//       return (filteredPhones = filteredPhones.filter(
-//         (phone) => phone.fullPrice === fullPrice
-//       ));
-
-//     case !!price:
-//       return (filteredPhones = filteredPhones.filter(
-//         (phone) => phone.price === price
-//       ));
-
-//     case !!capacity:
-//       return (filteredPhones = filteredPhones.filter(
-//         (phone) => phone.capacity === capacity
-//       ));
-
-//     case !!color:
-//       return (filteredPhones = filteredPhones.filter(
-//         (phone) => phone.color === color
-//       ));
-
-//     case !!ram:
-//       return (filteredPhones = filteredPhones.filter(
-//         (phone) => phone.ram === ram
-//       ));
-
-//     case !!year:
-//       return (filteredPhones = filteredPhones.filter(
-//         (phone) => phone.year === year
-//       ));
-
-//     default:
-//       return filteredPhones;
-//   }
-// };
-
-export const getAll = () => {
-  return Product.findAll();
+export const getAll = (orderBy: string = 'id', orderDir: OrderDirection) => {
+  return Product.findAll({
+    order: [[orderBy, orderDir]]
+  });
 };
 
 export const getById = (id: number) => {
   return Product.findByPk(id);
 };
 
-export const getByPage = (page: number, limit: number) => {
+export const getByPageAndOrder = (
+  page: number, 
+  limit: number,
+  orderBy: string = 'id',
+  orderDir: OrderDirection = 'ASC',
+) => {
   const offset = (page - 1) * limit;
-  
-  return Product.findAndCountAll({
+  const properties: RequestProps = {
     offset,
-    limit, 
-  })
+    limit,
+  }
+
+  if (orderBy) {
+    const order: Order = [[orderBy, orderDir]];
+
+    properties.order = order;
+  }
+
+  return Product.findAndCountAll(properties)
 };
