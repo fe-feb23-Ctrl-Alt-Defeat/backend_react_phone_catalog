@@ -1,13 +1,18 @@
+import { Order } from "sequelize";
 import { Product } from "../models/Product";
 
 type RequestProps = {
   offset: number;
   limit: number;
-  order?: string | undefined;
+  order?: Order;
 }
 
-export const getAll = () => {
-  return Product.findAll();
+type OrderDirection = 'ASC' | 'DESC';
+
+export const getAll = (orderBy: string = 'id', orderDir: OrderDirection) => {
+  return Product.findAll({
+    order: [[orderBy, orderDir]]
+  });
 };
 
 export const getById = (id: number) => {
@@ -17,21 +22,20 @@ export const getById = (id: number) => {
 export const getByPageAndOrder = (
   page: number, 
   limit: number,
-  orderBy?: string,
+  orderBy: string = 'id',
+  orderDir: OrderDirection = 'ASC',
 ) => {
   const offset = (page - 1) * limit;
-
   const properties: RequestProps = {
     offset,
     limit,
   }
 
   if (orderBy) {
-    properties.order = orderBy;
+    const order: Order = [[orderBy, orderDir]];
+
+    properties.order = order;
   }
-  
-  return Product.findAndCountAll({
-    offset,
-    limit,
-  })
+
+  return Product.findAndCountAll(properties)
 };

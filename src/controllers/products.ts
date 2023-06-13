@@ -2,10 +2,11 @@ import { Request, Response } from "express";
 import * as productService from "../services/products";
 
 export const getAllProducts = async(req: Request, res: Response) => {
-  const { page, limit, orderBy, orderDir } = req.query;
+  const { page, limit, orderBy, orderDir = 'ASC' } = req.query;
   const isRequestBad = ((page && !limit) || (!page && limit))
-    || ((orderDir !== 'ASC' && orderDir !== 'DESC') && orderDir !== undefined);
-  
+    || ((orderDir !== 'ASC' && orderDir !== 'DESC'));
+  const sortedBy = orderBy?.toString();
+
   if (isRequestBad) {
     res.sendStatus(400);
 
@@ -13,24 +14,19 @@ export const getAllProducts = async(req: Request, res: Response) => {
   }
 
   if (page && limit) {
-    const sortedBy = orderBy?.toString() || undefined;
-
     const slicedProducts = await productService.getByPageAndOrder(
       Number(page), 
       Number(limit),
       sortedBy,
+      orderDir,
     )
-
-    if (orderDir === 'DESC') {
-      slicedProducts.rows.reverse();
-    }
 
     res.send(slicedProducts);
 
     return;
   }
 
-  const products = await productService.getAll();
+  const products = await productService.getAll(sortedBy, orderDir);
 
   res.send(products);
 };
