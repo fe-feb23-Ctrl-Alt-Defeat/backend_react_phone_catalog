@@ -30,3 +30,5 @@ or
 {
     "ids": [1,5,10]
 }
+
+You should not use any query params
