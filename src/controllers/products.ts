@@ -1,13 +1,12 @@
 import { Request, Response } from "express";
 import * as productService from "../services/products";
 export const getProducts = async(req: Request, res: Response) => {
-  const { page, limit, orderBy, orderDir = 'ASC' } = req.query;
-  if (req.body.ids && !page && !limit && !orderBy && orderDir!== 'ASC') {
-    const { ids }: {ids: number[]} = req.body;
+  const { page, limit, orderBy, orderDir = 'ASC', ids } = req.query;
+  if (ids) {
+    const idsArray = ids.toString().split(',').map(id => Number(id));
+    const products = await productService.getByIds(idsArray);
 
-    console.log(req.body);
-
-    const products = await productService.getByIds(ids);
+    console.log(ids);
 
     res.send(products);
 
