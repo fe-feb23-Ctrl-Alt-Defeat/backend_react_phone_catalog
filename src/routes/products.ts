@@ -3,5 +3,5 @@ import * as productsController from "../controllers/products";
 
 export const productsRouter = express.Router();
 
-productsRouter.get("/", productsController.getAllProducts);
+productsRouter.get("/", productsController.getProducts);
 productsRouter.get("/:id", productsController.getOneById);

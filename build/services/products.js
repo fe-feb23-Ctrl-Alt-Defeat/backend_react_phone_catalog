@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getByPageAndOrder = exports.getById = exports.getAll = void 0;
+exports.getByPageAndOrder = exports.getById = exports.getByIds = exports.getAll = void 0;
 const Product_1 = require("../models/Product");
 const getAll = (orderBy = 'id', orderDir) => {
     return Product_1.Product.findAll({
@@ -8,6 +8,14 @@ const getAll = (orderBy = 'id', orderDir) => {
     });
 };
 exports.getAll = getAll;
+const getByIds = (ids) => {
+    return Product_1.Product.findAll({
+        where: {
+            id: ids,
+        }
+    });
+};
+exports.getByIds = getByIds;
 const getById = (id) => {
     return Product_1.Product.findByPk(id);
 };

@@ -30,5 +30,5 @@ exports.productsRouter = void 0;
 const express_1 = __importDefault(require("express"));
 const productsController = __importStar(require("../controllers/products"));
 exports.productsRouter = express_1.default.Router();
-exports.productsRouter.get("/", productsController.getAllProducts);
+exports.productsRouter.get("/", productsController.getProducts);
 exports.productsRouter.get("/:id", productsController.getOneById);
