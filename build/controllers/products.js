@@ -92,14 +92,14 @@ const getDiscount = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.getDiscount = getDiscount;
 const getRecommended = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const recommendedIds = [];
-    const products = yield productService.getAll('id', 'ASC');
-    const { length } = products;
+    const length = yield productService.getLength();
     while (recommendedIds.length !== 16) {
         const randomNum = (0, getRandomNum_1.getRandomNum)(length);
         if (!recommendedIds.includes(randomNum)) {
             recommendedIds.push(randomNum);
         }
     }
-    res.send(products.filter(({ id }) => recommendedIds.includes(id)));
+    const products = yield productService.getByIds(recommendedIds);
+    res.send(products);
 });
 exports.getRecommended = getRecommended;

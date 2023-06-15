@@ -67,3 +67,7 @@ export const getFilteredByProductType = (productType: string) => {
     }
   })
 }
+
+export const getLength = () => {
+  return Product.count();
+}
