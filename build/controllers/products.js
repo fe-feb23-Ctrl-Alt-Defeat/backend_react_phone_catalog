@@ -35,22 +35,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDiscount = exports.getOneById = exports.getProducts = void 0;
 const productService = __importStar(require("../services/products"));
 const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { page, limit, orderBy, orderDir = 'ASC', ids } = req.query;
+    const { page, limit, orderBy, orderDir = 'ASC', ids, productType, } = req.query;
+    const isRequestBad = ((page && !limit) || (!page && limit))
+        || ((orderDir !== 'ASC' && orderDir !== 'DESC'));
+    const sortedBy = orderBy === null || orderBy === void 0 ? void 0 : orderBy.toString();
+    if (isRequestBad) {
+        res.sendStatus(400);
+        return;
+    }
+    if (productType) {
+        try {
+            const products = yield productService
+                .getFilteredByProductType(productType.toString());
+            res.send(products);
+            return;
+        }
+        catch (_a) {
+            res.send([]);
+            return;
+        }
+    }
     if (ids) {
-        if (ids.toString().length === 0) {
+        if (ids.toString().length === 0 && ids === undefined) {
             res.send([]);
             return;
         }
         const idsArray = ids.toString().split(',').map(id => Number(id));
         const products = yield productService.getByIds(idsArray);
         res.send(products);
-        return;
-    }
-    const isRequestBad = ((page && !limit) || (!page && limit))
-        || ((orderDir !== 'ASC' && orderDir !== 'DESC'));
-    const sortedBy = orderBy === null || orderBy === void 0 ? void 0 : orderBy.toString();
-    if (isRequestBad) {
-        res.sendStatus(400);
         return;
     }
     if (page && limit) {

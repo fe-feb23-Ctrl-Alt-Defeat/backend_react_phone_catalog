@@ -1,9 +1,41 @@
 import { Request, Response } from "express";
 import * as productService from "../services/products";
 export const getProducts = async(req: Request, res: Response) => {
-  const { page, limit, orderBy, orderDir = 'ASC', ids } = req.query;
+  const {
+    page, 
+    limit, 
+    orderBy, 
+    orderDir = 'ASC', 
+    ids,
+    productType,
+  } = req.query;
+  const isRequestBad = ((page && !limit) || (!page && limit))
+    || ((orderDir !== 'ASC' && orderDir !== 'DESC'));
+  const sortedBy = orderBy?.toString();
+
+  if (isRequestBad) {
+    res.sendStatus(400);
+
+    return;
+  }
+
+  if (productType) {
+    try {
+      const products = await productService
+      .getFilteredByProductType(productType.toString())
+
+      res.send(products);
+
+      return;
+    } catch {
+      res.send([]);
+
+      return;
+    }
+  }
+  
   if (ids) {
-    if (ids.toString().length === 0) {
+    if (ids.toString().length === 0 && ids === undefined) {
       res.send([]);
 
       return;
@@ -13,17 +45,6 @@ export const getProducts = async(req: Request, res: Response) => {
     const products = await productService.getByIds(idsArray);
 
     res.send(products);
-
-    return;
-  }
-  
-  
-  const isRequestBad = ((page && !limit) || (!page && limit))
-    || ((orderDir !== 'ASC' && orderDir !== 'DESC'));
-  const sortedBy = orderBy?.toString();
-
-  if (isRequestBad) {
-    res.sendStatus(400);
 
     return;
   }

@@ -55,3 +55,11 @@ export const getDiscount = () => {
     limit: 16,
   })
 }
+
+export const getFilteredByProductType = (productType: string) => {
+  return Product.findAll({
+    where: {
+      category: productType,
+    }
+  })
+}
