@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDiscount = exports.getByPageAndOrder = exports.getById = exports.getByIds = exports.getAll = void 0;
+exports.getFilteredByProductType = exports.getDiscount = exports.getByPageAndOrder = exports.getById = exports.getByIds = exports.getAll = void 0;
 const Product_1 = require("../models/Product");
 const sequelize_typescript_1 = require("sequelize-typescript");
 const getAll = (orderBy = 'id', orderDir) => {
@@ -41,3 +41,11 @@ const getDiscount = () => {
     });
 };
 exports.getDiscount = getDiscount;
+const getFilteredByProductType = (productType) => {
+    return Product_1.Product.findAll({
+        where: {
+            category: productType,
+        }
+    });
+};
+exports.getFilteredByProductType = getFilteredByProductType;
