@@ -5,4 +5,4 @@ export const productsRouter = express.Router();
 
 productsRouter.get("/", productsController.getProducts);
 productsRouter.get("/discount", productsController.getDiscount);
-productsRouter.get("/:id", productsController.getOneById);
+productsRouter.get("/:itemId", productsController.getOneByItemId);

@@ -67,16 +67,16 @@ export const getProducts = async(req: Request, res: Response) => {
   res.send(products);
 };
 
-export const getOneById = async(req: Request, res: Response) => {
-  const { id } = req.params;
-  const foundProduct = await productService.getById(+id);
+export const getOneByItemId = async(req: Request, res: Response) => {
+  const { itemId } = req.params;
+  const foundProduct = await productService.getByItemId(itemId);
 
-  if (!foundProduct) {
+  if (foundProduct.length === 0) {
     res.sendStatus(404);
     return;
   }
 
-  res.send(foundProduct);
+  res.send(foundProduct[0]);
 };
 
 export const getDiscount = async(req: Request, res: Response) => {
