@@ -32,7 +32,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getOneById = exports.getProducts = void 0;
+exports.getDiscount = exports.getOneById = exports.getProducts = void 0;
 const productService = __importStar(require("../services/products"));
 const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { page, limit, orderBy, orderDir = 'ASC', ids } = req.query;
@@ -72,3 +72,8 @@ const getOneById = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     res.send(foundProduct);
 });
 exports.getOneById = getOneById;
+const getDiscount = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const products = yield productService.getDiscount();
+    res.send(products);
+});
+exports.getDiscount = getDiscount;
