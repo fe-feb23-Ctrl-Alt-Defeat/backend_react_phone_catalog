@@ -88,8 +88,7 @@ export const getDiscount = async(req: Request, res: Response) => {
 
 export const getRecommended = async(req: Request, res: Response) => {
   const recommendedIds: number[] = [];
-  const products = await productService.getAll('id', 'ASC');
-  const { length } = products;
+  const length = await productService.getLength();
 
   while (recommendedIds.length !== 16) {
     const randomNum = getRandomNum(length);
@@ -99,5 +98,7 @@ export const getRecommended = async(req: Request, res: Response) => {
     }
   }
 
-  res.send(products.filter(({ id }) => recommendedIds.includes(id)));
+  const products = await productService.getByIds(recommendedIds);
+
+  res.send(products);
 }
