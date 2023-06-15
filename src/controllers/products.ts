@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import * as productService from "../services/products";
+import { getRandomNum } from "../utils/getRandomNum";
 export const getProducts = async(req: Request, res: Response) => {
   const {
     page, 
@@ -84,3 +85,19 @@ export const getDiscount = async(req: Request, res: Response) => {
 
   res.send(products);
 };
+
+export const getRecommended = async(req: Request, res: Response) => {
+  const recommendedIds: number[] = [];
+  const products = await productService.getAll('id', 'ASC');
+  const { length } = products;
+
+  while (recommendedIds.length !== 16) {
+    const randomNum = getRandomNum(length);
+
+    if (!recommendedIds.includes(randomNum)) {
+      recommendedIds.push(randomNum);
+    }
+  }
+
+  res.send(products.filter(({ id }) => recommendedIds.includes(id)));
+}

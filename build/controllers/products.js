@@ -32,8 +32,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDiscount = exports.getOneByItemId = exports.getProducts = void 0;
+exports.getRecommended = exports.getDiscount = exports.getOneByItemId = exports.getProducts = void 0;
 const productService = __importStar(require("../services/products"));
+const getRandomNum_1 = require("../utils/getRandomNum");
 const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { page, limit, orderBy, orderDir = 'ASC', ids, productType, } = req.query;
     const isRequestBad = ((page && !limit) || (!page && limit))
@@ -89,3 +90,16 @@ const getDiscount = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     res.send(products);
 });
 exports.getDiscount = getDiscount;
+const getRecommended = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const recommendedIds = [];
+    const products = yield productService.getAll('id', 'ASC');
+    const { length } = products;
+    while (recommendedIds.length !== 16) {
+        const randomNum = (0, getRandomNum_1.getRandomNum)(length);
+        if (!recommendedIds.includes(randomNum)) {
+            recommendedIds.push(randomNum);
+        }
+    }
+    res.send(products.filter(({ id }) => recommendedIds.includes(id)));
+});
+exports.getRecommended = getRecommended;
