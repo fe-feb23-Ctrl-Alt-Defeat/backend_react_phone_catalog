@@ -57,3 +57,9 @@ export const getOneById = async(req: Request, res: Response) => {
 
   res.send(foundProduct);
 };
+
+export const getDiscount = async(req: Request, res: Response) => {
+  const products = await productService.getDiscount();
+
+  res.send(products);
+};

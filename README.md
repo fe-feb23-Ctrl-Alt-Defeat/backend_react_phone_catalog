@@ -27,3 +27,4 @@ or
 /products?orderBy=year&orderDir=DESC
 
 6. To get products by their ids (for exapmle to get your cart or favorites) you should use /products?ids=1,2,3
+7. To get 16 products with biggest discount you should use /products/discount.

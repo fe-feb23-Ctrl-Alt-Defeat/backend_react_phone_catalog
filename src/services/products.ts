@@ -1,5 +1,6 @@
 import { Order } from "sequelize";
 import { Product } from "../models/Product";
+import { Sequelize } from "sequelize-typescript";
 
 type RequestProps = {
   offset: number;
@@ -47,3 +48,10 @@ export const getByPageAndOrder = (
 
   return Product.findAndCountAll(properties)
 };
+
+export const getDiscount = () => {
+  return Product.findAll({
+    order: [[Sequelize.literal('"Product"."fullPrice" - "Product"."price"'), 'DESC']],
+    limit: 16,
+  })
+}
