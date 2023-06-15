@@ -24,8 +24,12 @@ export const getByIds = (ids: number[]) => {
   })
 }
 
-export const getById = (id: number) => {
-  return Product.findByPk(id);
+export const getByItemId = (itemId: string) => {
+  return Product.findAll({
+    where: {
+      itemId,
+    }
+  });
 };
 
 export const getByPageAndOrder = (

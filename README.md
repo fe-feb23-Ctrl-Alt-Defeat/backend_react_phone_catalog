@@ -5,9 +5,9 @@ sync.ts and dbInitInfo.json are not used in server, they are for sending initial
 
 To get: 
 1. All products you should use /products endpoint.
-2. One exact product you should use /products/id (id is number).
+2. One exact product you should use /products/itemId (itemId is number).
 Example:
-/products/3
+/products/apple-iphone-11-pro-max-512gb-midnightgreen
 3. To get detailed phone info you should use /phones/itemId (itemId is string, exapmle - 'apple-iphone-7-plus-32gb-black').
 Example request:
 /phones/apple-iphone-7-plus-32gb-black
