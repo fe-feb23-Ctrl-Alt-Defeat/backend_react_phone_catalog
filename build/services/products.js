@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getLength = exports.getFilteredByProductType = exports.getDiscount = exports.getByPageAndOrder = exports.getByItemId = exports.getByIds = exports.getAll = void 0;
+exports.getBySearchParam = exports.getLength = exports.getFilteredByProductType = exports.getDiscount = exports.getByPageAndOrder = exports.getByItemId = exports.getByIds = exports.getAll = void 0;
 const Product_1 = require("../models/Product");
 const sequelize_typescript_1 = require("sequelize-typescript");
+const sequelize_1 = require("sequelize");
 const getAll = (orderBy = 'id', orderDir) => {
     return Product_1.Product.findAll({
         order: [[orderBy, orderDir]]
@@ -57,3 +58,13 @@ const getLength = () => {
     return Product_1.Product.count();
 };
 exports.getLength = getLength;
+const getBySearchParam = (search) => {
+    return Product_1.Product.findAll({
+        where: {
+            name: {
+                [sequelize_1.Op.iLike]: `%${search}%`,
+            },
+        }
+    });
+};
+exports.getBySearchParam = getBySearchParam;
