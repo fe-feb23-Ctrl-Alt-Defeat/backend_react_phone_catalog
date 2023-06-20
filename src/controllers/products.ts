@@ -9,6 +9,7 @@ export const getProducts = async(req: Request, res: Response) => {
     orderDir = 'ASC', 
     ids,
     productType,
+    search,
   } = req.query;
   const isRequestBad = ((page && !limit) || (!page && limit))
     || ((orderDir !== 'ASC' && orderDir !== 'DESC'));
@@ -16,6 +17,20 @@ export const getProducts = async(req: Request, res: Response) => {
 
   if (isRequestBad) {
     res.sendStatus(400);
+
+    return;
+  }
+
+  if (search) {
+    const products = await productService.getBySearchParam(search.toString());
+
+    if (products.length === 0) {
+      res.sendStatus(404);
+
+      return;
+    }
+
+    res.send(products);
 
     return;
   }

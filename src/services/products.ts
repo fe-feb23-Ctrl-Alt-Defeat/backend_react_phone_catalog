@@ -1,6 +1,7 @@
 import { Order } from "sequelize";
 import { Product } from "../models/Product";
 import { Sequelize } from "sequelize-typescript";
+import { Op } from "sequelize";
 
 type RequestProps = {
   offset: number;
@@ -70,4 +71,14 @@ export const getFilteredByProductType = (productType: string) => {
 
 export const getLength = () => {
   return Product.count();
+}
+
+export const getBySearchParam = (search: string) => {
+  return Product.findAll({
+    where: {
+      name: {
+        [Op.iLike]: `%${search}%`,
+      },
+    }
+  })
 }

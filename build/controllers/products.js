@@ -36,12 +36,21 @@ exports.getRecommended = exports.getDiscount = exports.getOneByItemId = exports.
 const productService = __importStar(require("../services/products"));
 const getRandomNum_1 = require("../utils/getRandomNum");
 const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { page, limit, orderBy, orderDir = 'ASC', ids, productType, } = req.query;
+    const { page, limit, orderBy, orderDir = 'ASC', ids, productType, search, } = req.query;
     const isRequestBad = ((page && !limit) || (!page && limit))
         || ((orderDir !== 'ASC' && orderDir !== 'DESC'));
     const sortedBy = orderBy === null || orderBy === void 0 ? void 0 : orderBy.toString();
     if (isRequestBad) {
         res.sendStatus(400);
+        return;
+    }
+    if (search) {
+        const products = yield productService.getBySearchParam(search.toString());
+        if (products.length === 0) {
+            res.sendStatus(404);
+            return;
+        }
+        res.send(products);
         return;
     }
     if (productType) {
